@@ -12,7 +12,7 @@ public class Banco {
 	protected EntityTransaction et = null;
 
 	public void conectar() {
-		emf = Persistence.createEntityManagerFactory("MinhaPersistencia");
+		emf = Persistence.createEntityManagerFactory("PersistenciaVereadores");
 		em = emf.createEntityManager();
 	}
 

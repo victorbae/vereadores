@@ -1,5 +1,6 @@
 package bae.baesso.victor.model;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -18,8 +19,13 @@ import lombok.Setter;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(name = "VEREADOR")
-public class Vereador extends Pessoa {
+@Entity
+public class Vereador extends Pessoa implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 72516528141744963L;
 
 	@Id
 	@GeneratedValue
