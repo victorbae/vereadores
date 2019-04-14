@@ -13,15 +13,15 @@ public class ProjetoService {
 	private ProjetoBanco repository;
 
 	public List<Projeto> listar() {
-		return repository.listar(Projeto.class, "select proj from Projeto proj");
+		return repository.listar();
 	}
 
 	public Projeto findOne(Long codProjeto) {
-		return repository.findOne(Projeto.class, codProjeto);
+		return repository.findOne(codProjeto);
 	}
 
 	public void excluir(Long codProjeto) {
-		repository.excluir(Projeto.class, codProjeto);
+		repository.excluir(codProjeto);
 	}
 
 	public void salvar(Projeto projeto) {

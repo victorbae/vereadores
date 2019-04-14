@@ -13,15 +13,15 @@ public class PartidoService {
 	private PartidoBanco repository;
 
 	public List<Partido> listar() {
-		return repository.listar(Partido.class, "select par from Partido par");
+		return repository.listar();
 	}
 
 	public Partido findOne(Long codPartido) {
-		return repository.findOne(Partido.class, codPartido);
+		return repository.findOne(codPartido);
 	}
 
 	public void excluir(Long codPartido) {
-		repository.excluir(Partido.class, codPartido);
+		repository.excluir(codPartido);
 	}
 
 	public void salvar(Partido partido) {

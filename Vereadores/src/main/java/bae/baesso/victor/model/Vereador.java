@@ -6,7 +6,6 @@ import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
@@ -27,7 +26,6 @@ public class Vereador extends Pessoa implements Serializable {
 	 */
 	private static final long serialVersionUID = 72516528141744963L;
 
-	@Id
 	@GeneratedValue
 	private Long codigo;
 

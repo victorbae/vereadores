@@ -5,19 +5,32 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Setter
+@Getter
 public class Banco {
 
-	protected EntityManagerFactory emf = null;
-	protected EntityManager em = null;
-	protected EntityTransaction et = null;
+	private static EntityManagerFactory emf;
+	private static EntityManager em;
 
-	public void conectar() {
-		emf = Persistence.createEntityManagerFactory("PersistenciaVereadores");
+	public static EntityManager getEntityManager() {
+		return em;
+	}
+
+	public static EntityTransaction getTransaction() {
+		return em.getTransaction();
+	}
+
+	public static void conectar() {
+		emf = Persistence.createEntityManagerFactory("PersistenciaPartidas");
 		em = emf.createEntityManager();
 	}
 
-	public void desconectar() {
+	public static void desconectar() {
 		em.close();
 		emf.close();
 	}
+
 }

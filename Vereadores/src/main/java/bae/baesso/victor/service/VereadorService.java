@@ -13,15 +13,15 @@ public class VereadorService {
 	private VereadorBanco repository;
 
 	public List<Vereador> listar() {
-		return repository.listar(Vereador.class, "select ver from Vereador ver");
+		return repository.listar();
 	}
 
 	public Vereador findOne(Long codVereador) {
-		return repository.findOne(Vereador.class, codVereador);
+		return repository.findOne(codVereador);
 	}
 
 	public void excluir(Long codVereador) {
-		repository.excluir(Vereador.class, codVereador);
+		repository.excluir(codVereador);
 	}
 
 	public void salvar(Vereador vereador) {

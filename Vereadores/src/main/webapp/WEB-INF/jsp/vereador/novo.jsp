@@ -49,6 +49,90 @@
 			</form>
 		</div>
 	</div>
+	
+	
+	<div class="row justify-content-sm-center" style="margin-left: 0px; margin-right: 0px;">
+		<div class="col-sm-8">
+			<h3 class="display-4" style=" margin-top: 12px;">Projetos</h3>
+			<button class="btn btn-info" data-toggle="modal" data-target="#projeto" style="margin-bottom: 12px; margin-top: 12px;">Novo Projeto</button>
+			<table class="table table-bordered table-striped table-hover">
+				<thead>
+					<tr>
+						<th >Nome</th>
+						<th >Apresentado</th>
+						<th >Aprovado</th>
+					</tr>
+				</thead>
+				<tbody>
+					<c:choose>
+						<c:when test="${not empty vereador.projetos}">
+							<c:forEach items="${projetoLvereador.projetosist}" var="projeto">
+								<tr>
+									<td onclick="location.href='<c:url value="/projeto/editar/${projeto.codigo}'"/>'">${projeto.nome}</td>
+									<td>
+										<c:choose>
+											<c:when test="${projeto.apresentado == true}">
+												<i class="fas fa-check"></i>
+										     </c:when>
+											<c:otherwise>
+												<i class="fas fa-times"></i>
+											</c:otherwise>
+										</c:choose>
+								    </td>
+									<td>
+										<c:choose>
+											<c:when test="${projeto.aprovado == true}">
+												<i class="fas fa-check"></i>
+										     </c:when>
+											<c:otherwise>
+												<i class="fas fa-times"></i>
+											</c:otherwise>
+										</c:choose>
+								    </td>
+								</tr>
+							</c:forEach>
+						</c:when>
+						<c:otherwise>
+							<tr>
+								<td class="text-center">Nenhum projeto cadastrado</td>
+							</tr>
+						</c:otherwise>
+					</c:choose>
+				</tbody>
+			</table>
+		</div>
+	</div>
+		
+	<div class="modal" tabindex="-1" role="dialog" id="projeto">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">Projeto</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<form action="<c:url value="/partido/salvar"/>" method="post">
+						<div class="form-group">
+							<input type="hidden" name="partido.codigo" value="${projeto.codigo}"> 
+							<input type="text" class="form-control" value="${projeto.nome}" name="projeto.nome" placeholder="Nome">
+						</div>
+						<div class="custom-control custom-switch">
+							<input type="checkbox" class="custom-control-input" name="projeto.apresentado" value="${projeto.apresentado}" id="switchApresentado">
+							<label class="custom-control-label" for="switchApresentado">Apresentado</label>
+						</div>
+						<div class="custom-control custom-switch">
+							<input type="checkbox" class="custom-control-input" name="projeto.aprovado" value="${projeto.aprovado}" id="switchAprovado">
+							<label class="custom-control-label" for="switchAprovado">Aprovado</label>
+						</div>
+						<button type="submit" class="btn btn-success float-right">Salvar</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	
 	<footer>
 		<div class="row justify-content-sm-center">
 			<div class="col-sm-6 text-center">

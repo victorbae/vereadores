@@ -8,10 +8,10 @@ public interface CrudDao<T> {
 
 	void alterar(T dado);
 
-	void excluir(Class<T> dado, Long codigo);
+	void excluir(Long codigo);
 
-	T findOne(Class<T> classs, Long cod);
+	T findOne(Long cod);
 
-	List<T> listar(Class<T> classs, String query);
+	List<T> listar();
 
 }

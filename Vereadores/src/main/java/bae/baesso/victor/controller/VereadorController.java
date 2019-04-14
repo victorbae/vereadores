@@ -26,6 +26,11 @@ public class VereadorController {
 		result.redirectTo(this).listar();
 	}
 
+	@Get("/vereador")
+	public void indexTwo() {
+		result.redirectTo(this).listar();
+	}
+
 	@Get("/vereador/listar")
 	public List<Vereador> listar() {
 		return service.listar();
