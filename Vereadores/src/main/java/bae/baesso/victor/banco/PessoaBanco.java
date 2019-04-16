@@ -2,13 +2,13 @@ package bae.baesso.victor.banco;
 
 import java.util.List;
 
-import bae.baesso.victor.dao.PartidoDao;
-import bae.baesso.victor.model.Partido;
+import bae.baesso.victor.dao.PessoaDao;
+import bae.baesso.victor.model.Pessoa;
 
-public class PartidoBanco implements PartidoDao {
+public class PessoaBanco implements PessoaDao {
 
 	@Override
-	public void salvar(Partido dado) {
+	public void salvar(Pessoa dado) {
 		Banco.conectar();
 		Banco.getTransaction().begin();
 
@@ -25,7 +25,14 @@ public class PartidoBanco implements PartidoDao {
 	}
 
 	@Override
-	public void alterar(Partido dado) {
+	public Pessoa salvarr(Pessoa dado) {
+		salvar(dado);
+		Banco.flush();
+		return dado;
+	}
+
+	@Override
+	public void alterar(Pessoa dado) {
 		Banco.conectar();
 		Banco.getTransaction().begin();
 
@@ -45,7 +52,7 @@ public class PartidoBanco implements PartidoDao {
 		Banco.conectar();
 		Banco.getTransaction().begin();
 		try {
-			Banco.getEntityManager().remove(Banco.getEntityManager().find(Partido.class, codigo));
+			Banco.getEntityManager().remove(Banco.getEntityManager().find(Pessoa.class, codigo));
 			Banco.getTransaction().commit();
 		} catch (Exception e) {
 			Banco.getTransaction().rollback();
@@ -56,10 +63,10 @@ public class PartidoBanco implements PartidoDao {
 	}
 
 	@Override
-	public Partido findOne(Long cod) {
+	public Pessoa findOne(Long cod) {
 		Banco.conectar();
 		try {
-			return Banco.getEntityManager().find(Partido.class, cod);
+			return Banco.getEntityManager().find(Pessoa.class, cod);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
@@ -69,11 +76,11 @@ public class PartidoBanco implements PartidoDao {
 	}
 
 	@Override
-	public List<Partido> listar() {
+	public List<Pessoa> listar() {
 		Banco.conectar();
 
 		try {
-			return Banco.getEntityManager().createQuery("select part from Partido part", Partido.class).getResultList();
+			return Banco.getEntityManager().createQuery("select pess from Pessoa pess", Pessoa.class).getResultList();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;

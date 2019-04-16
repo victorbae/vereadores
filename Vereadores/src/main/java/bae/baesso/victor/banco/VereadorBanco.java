@@ -73,7 +73,7 @@ public class VereadorBanco extends Banco implements VereadorDao {
 		Banco.conectar();
 
 		try {
-			return Banco.getEntityManager().createNamedQuery("select vers from Vereador vers", Vereador.class)
+			return Banco.getEntityManager().createQuery("select vers from Vereador vers", Vereador.class)
 					.getResultList();
 		} catch (Exception e) {
 			e.printStackTrace();

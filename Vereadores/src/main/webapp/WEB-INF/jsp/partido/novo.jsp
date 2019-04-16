@@ -25,7 +25,7 @@
 					    <a class="nav-link text-dark" href="<c:url value="/projeto"/>">Projetos</a>
 					  </li>
 					  <li class="nav-item">
-					    <a class="nav-link text-dark" href="<c:url value="/partido'"/>">Partidos</a>
+					    <a class="nav-link text-dark" href="<c:url value="/partido/"/>">Partidos</a>
 					  </li>
 					</ul>
 				</div>
@@ -40,7 +40,11 @@
 			  <div class="form-group">
 				<input type="hidden" name="partido.codigo" value="${partido.codigo}"> 
 				<input type="text" class="form-control" value="${partido.numero}" name="partido.numero" placeholder="Número">
+			  </div>
+			  <div class="form-group">
 				<input type="text" class="form-control" value="${partido.nome}" name="partido.nome" placeholder="Nome">
+			  </div>
+			  <div class="form-group">
 				<input type="text" class="form-control" value="${partido.sigla}" name="partido.sigla" placeholder="Sigla">
 			  </div>
 			  

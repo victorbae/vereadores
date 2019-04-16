@@ -25,7 +25,7 @@
 					    <a class="nav-link text-dark" href="<c:url value="/projeto"/>">Projetos</a>
 					  </li>
 					  <li class="nav-item">
-					    <a class="nav-link text-dark" href="<c:url value="/partido"/>">Partidos</a>
+					    <a class="nav-link text-dark" href="<c:url value="/partido/"/>">Partidos</a>
 					  </li>
 					</ul>
 				</div>
@@ -49,7 +49,7 @@
 						<c:when test="${not empty vereadorList}">
 							<c:forEach items="${vereadorList}" var="vereador">
 								<tr>
-									<td onclick="location.href='<c:url value="/vereador/editar/${vereador.codigo}'"/>'">${vereador.nome}</td>
+									<td onclick="location.href='<c:url value="/vereador/editar/${vereador.codigo}'"/>'">${vereador.pessoa.nome}</td>
 									<td onclick="location.href='<c:url value="/vereador/editar/${vereador.codigo}'"/>'">${vereador.dataAssociacao}</td>
 									<td onclick="location.href='<c:url value="/vereador/editar/${vereador.codigo}'"/>'">${vereador.partido.sigla}</td>
 									<td>

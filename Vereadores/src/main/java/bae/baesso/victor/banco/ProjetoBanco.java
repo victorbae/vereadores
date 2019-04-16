@@ -73,8 +73,7 @@ public class ProjetoBanco extends Banco implements ProjetoDao {
 		Banco.conectar();
 
 		try {
-			return Banco.getEntityManager().createNamedQuery("select proj from Projeto proj", Projeto.class)
-					.getResultList();
+			return Banco.getEntityManager().createQuery("select proj from Projeto proj", Projeto.class).getResultList();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;

@@ -2,11 +2,13 @@ package bae.baesso.victor.service;
 
 import java.util.List;
 
+import javax.annotation.Resource;
 import javax.inject.Inject;
 
 import bae.baesso.victor.banco.PartidoBanco;
 import bae.baesso.victor.model.Partido;
 
+@Resource
 public class PartidoService {
 
 	@Inject
@@ -25,6 +27,10 @@ public class PartidoService {
 	}
 
 	public void salvar(Partido partido) {
-		repository.salvar(partido);
+		if (partido.getCodigo() != null) {
+			repository.alterar(partido);
+		} else {
+			repository.salvar(partido);
+		}
 	}
 }

@@ -24,13 +24,20 @@ public class Banco {
 	}
 
 	public static void conectar() {
-		emf = Persistence.createEntityManagerFactory("PersistenciaPartidas");
+		emf = Persistence.createEntityManagerFactory("PersistenciaVereadores");
 		em = emf.createEntityManager();
 	}
 
 	public static void desconectar() {
 		em.close();
 		emf.close();
+	}
+
+	public static void flush() {
+		Banco.conectar();
+		Banco.getTransaction().begin();
+		em.flush();
+		Banco.desconectar();
 	}
 
 }

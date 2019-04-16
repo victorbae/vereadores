@@ -2,11 +2,13 @@ package bae.baesso.victor.service;
 
 import java.util.List;
 
+import javax.annotation.Resource;
 import javax.inject.Inject;
 
 import bae.baesso.victor.banco.ProjetoBanco;
 import bae.baesso.victor.model.Projeto;
 
+@Resource
 public class ProjetoService {
 
 	@Inject

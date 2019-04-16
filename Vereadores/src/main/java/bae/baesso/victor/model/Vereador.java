@@ -1,11 +1,15 @@
 package bae.baesso.victor.model;
 
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
@@ -16,26 +20,30 @@ import lombok.Setter;
 
 @Setter
 @Getter
+@Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
-public class Vereador extends Pessoa implements Serializable {
+public class Vereador implements Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 72516528141744963L;
 
-	@GeneratedValue
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long codigo;
 
-	private LocalDate dataAssociacao;
+	private Date dataAssociacao;
 
-	@OneToOne
+	@ManyToOne
 	private Partido partido;
 
 	@OneToMany
 	private List<Projeto> projetos;
+
+	@OneToOne(fetch = FetchType.EAGER)
+	private Pessoa pessoa;
 
 	public Integer qtdProjetosApresentados() {
 		int count = 0;

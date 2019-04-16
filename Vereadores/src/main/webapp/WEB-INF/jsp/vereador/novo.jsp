@@ -25,7 +25,7 @@
 					    <a class="nav-link text-dark" href="<c:url value="/projeto"/>">Projetos</a>
 					  </li>
 					  <li class="nav-item">
-					    <a class="nav-link text-dark" href="<c:url value="/partido'"/>">Partidos</a>
+					    <a class="nav-link text-dark" href="<c:url value="/partido/"/>">Partidos</a>
 					  </li>
 					</ul>
 				</div>
@@ -39,7 +39,7 @@
 			<form action="<c:url value="/vereador/salvar"/>" method="post">
 			  <div class="form-group">
 				<input type="hidden" name="vereador.codigo" value="${vereador.codigo}"> 
-				<input type="text" class="form-control" value="${vereador.nome}" name="vereador.nome" placeholder="Nome">
+				<input type="text" class="form-control" value="${vereador.pessoa.nome}" name="vereador.pessoa.nome" placeholder="Nome">
 			  </div>
 			  <div class="form-group">
 	              <input type="text" class="form-control" id="data" name="vereador.dataAssociacao" placeholder="Data Associacao" value="${vereador.dataAssociacao}" onfocus="(this.type='date')" pattern="[0-9]{2}/[0-9]{2}/[0-9]{4}"/>
@@ -50,58 +50,59 @@
 		</div>
 	</div>
 	
-	
-	<div class="row justify-content-sm-center" style="margin-left: 0px; margin-right: 0px;">
-		<div class="col-sm-8">
-			<h3 class="display-4" style=" margin-top: 12px;">Projetos</h3>
-			<button class="btn btn-info" data-toggle="modal" data-target="#projeto" style="margin-bottom: 12px; margin-top: 12px;">Novo Projeto</button>
-			<table class="table table-bordered table-striped table-hover">
-				<thead>
-					<tr>
-						<th >Nome</th>
-						<th >Apresentado</th>
-						<th >Aprovado</th>
-					</tr>
-				</thead>
-				<tbody>
-					<c:choose>
-						<c:when test="${not empty vereador.projetos}">
-							<c:forEach items="${projetoLvereador.projetosist}" var="projeto">
+	<c:if test="${not empty vereador.projetos}">
+		<div class="row justify-content-sm-center" style="margin-left: 0px; margin-right: 0px;">
+			<div class="col-sm-8">
+				<h3 class="display-4" style=" margin-top: 12px;">Projetos</h3>
+				<button class="btn btn-info" data-toggle="modal" data-target="#projeto" style="margin-bottom: 12px; margin-top: 12px;">Novo Projeto</button>
+				<table class="table table-bordered table-striped table-hover">
+					<thead>
+						<tr>
+							<th >Nome</th>
+							<th >Apresentado</th>
+							<th >Aprovado</th>
+						</tr>
+					</thead>
+					<tbody>
+						<c:choose>
+							<c:when test="${not empty vereador.projetos}">
+								<c:forEach items="${projetoLvereador.projetosist}" var="projeto">
+									<tr>
+										<td onclick="location.href='<c:url value="/projeto/editar/${projeto.codigo}'"/>'">${projeto.nome}</td>
+										<td>
+											<c:choose>
+												<c:when test="${projeto.apresentado == true}">
+													<i class="fas fa-check"></i>
+											     </c:when>
+												<c:otherwise>
+													<i class="fas fa-times"></i>
+												</c:otherwise>
+											</c:choose>
+									    </td>
+										<td>
+											<c:choose>
+												<c:when test="${projeto.aprovado == true}">
+													<i class="fas fa-check"></i>
+											     </c:when>
+												<c:otherwise>
+													<i class="fas fa-times"></i>
+												</c:otherwise>
+											</c:choose>
+									    </td>
+									</tr>
+								</c:forEach>
+							</c:when>
+							<c:otherwise>
 								<tr>
-									<td onclick="location.href='<c:url value="/projeto/editar/${projeto.codigo}'"/>'">${projeto.nome}</td>
-									<td>
-										<c:choose>
-											<c:when test="${projeto.apresentado == true}">
-												<i class="fas fa-check"></i>
-										     </c:when>
-											<c:otherwise>
-												<i class="fas fa-times"></i>
-											</c:otherwise>
-										</c:choose>
-								    </td>
-									<td>
-										<c:choose>
-											<c:when test="${projeto.aprovado == true}">
-												<i class="fas fa-check"></i>
-										     </c:when>
-											<c:otherwise>
-												<i class="fas fa-times"></i>
-											</c:otherwise>
-										</c:choose>
-								    </td>
+									<td class="text-center" colspan="3">Nenhum projeto cadastrado</td>
 								</tr>
-							</c:forEach>
-						</c:when>
-						<c:otherwise>
-							<tr>
-								<td class="text-center">Nenhum projeto cadastrado</td>
-							</tr>
-						</c:otherwise>
-					</c:choose>
-				</tbody>
-			</table>
+							</c:otherwise>
+						</c:choose>
+					</tbody>
+				</table>
+			</div>
 		</div>
-	</div>
+	</c:if>
 		
 	<div class="modal" tabindex="-1" role="dialog" id="projeto">
 		<div class="modal-dialog" role="document">
