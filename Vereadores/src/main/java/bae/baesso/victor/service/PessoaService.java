@@ -29,6 +29,5 @@ public class PessoaService {
 		} else {
 			return repository.findOne(pessoa.getCodigo());
 		}
-
 	}
 }

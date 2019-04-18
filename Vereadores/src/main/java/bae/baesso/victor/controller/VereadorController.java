@@ -5,6 +5,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import bae.baesso.victor.model.Vereador;
+import bae.baesso.victor.service.PartidoService;
 import bae.baesso.victor.service.VereadorService;
 import br.com.caelum.vraptor.Controller;
 import br.com.caelum.vraptor.Get;
@@ -20,6 +21,8 @@ public class VereadorController {
 	private Result result;
 	@Inject
 	private VereadorService service;
+	@Inject
+	private PartidoService partidoService;
 
 	@Get("/")
 	public void index() {
@@ -57,6 +60,7 @@ public class VereadorController {
 
 	@Get("/vereador/novo")
 	public void novo() {
+		result.include("partidos", partidoService.listar());
 	}
 
 }

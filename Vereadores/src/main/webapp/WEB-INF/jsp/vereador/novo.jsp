@@ -5,7 +5,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>Novo Partido</title>
+	<title>Vereador</title>
 	<link rel="stylesheet"
 		href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
@@ -33,25 +33,48 @@
 		</div>
 	</header>
 	
-	<div class="row justify-content-sm-center">
+	<div class="row justify-content-sm-center m-0">
 		<div class="col-sm-5">
-			<h2 class="display-4" style="margin-bottom: 12px; margin-top: 12px; text-align: center;">Novo Vereador</h2>
+		<c:choose>
+			<c:when test="${not empty vereador.codigo}">
+				<c:set var="titulo" value="Editar Vereador"></c:set>
+			</c:when>
+			<c:otherwise>
+				<c:set var="titulo" value="Novo Vereador"></c:set>
+			</c:otherwise>
+		</c:choose>
+			<h2 class="display-4" style="margin-bottom: 12px; margin-top: 12px; text-align: center;">${titulo}</h2>
 			<form action="<c:url value="/vereador/salvar"/>" method="post">
 			  <div class="form-group">
 				<input type="hidden" name="vereador.codigo" value="${vereador.codigo}"> 
+				<input type="hidden" name="vereador.pessoa.codigo" value="${vereador.pessoa.codigo}"> 
 				<input type="text" class="form-control" value="${vereador.pessoa.nome}" name="vereador.pessoa.nome" placeholder="Nome">
 			  </div>
 			  <div class="form-group">
 	              <input type="text" class="form-control" id="data" name="vereador.dataAssociacao" placeholder="Data Associacao" value="${vereador.dataAssociacao}" onfocus="(this.type='date')" pattern="[0-9]{2}/[0-9]{2}/[0-9]{4}"/>
 		      </div>
-			  
+			  <div class="form-group">
+			  <select class="custom-select" name="vereador.partido.codigo"
+						placeholder="Partido">
+					<c:choose>
+						<c:when test="${not empty partidos}">
+							<c:forEach items="${partidos}" var="partido">
+								<option selected value="${partido.codigo}">${partido.nome}</option>
+							</c:forEach>
+						</c:when>
+						<c:otherwise>
+							<option>Nenhum partido cadastrado !!!</option>
+						</c:otherwise>
+					</c:choose>		
+				</select>	  
+		      </div>
 			  <button type="submit" class="btn btn-success float-right">Salvar</button>
 			</form>
 		</div>
 	</div>
 	
-	<c:if test="${not empty vereador.projetos}">
-		<div class="row justify-content-sm-center" style="margin-left: 0px; margin-right: 0px;">
+	<c:if test="${not empty vereador.codigo}">
+		<div class="row justify-content-sm-center m-0" style="margin-left: 0px; margin-right: 0px;">
 			<div class="col-sm-8">
 				<h3 class="display-4" style=" margin-top: 12px;">Projetos</h3>
 				<button class="btn btn-info" data-toggle="modal" data-target="#projeto" style="margin-bottom: 12px; margin-top: 12px;">Novo Projeto</button>
@@ -114,8 +137,9 @@
 					</button>
 				</div>
 				<div class="modal-body">
-					<form action="<c:url value="/partido/salvar"/>" method="post">
+					<form action="<c:url value="/projeto/salvar"/>" method="post">
 						<div class="form-group">
+							<input type="hidden" name="partido.codigo" value="${vereador.codigo}"> 
 							<input type="hidden" name="partido.codigo" value="${projeto.codigo}"> 
 							<input type="text" class="form-control" value="${projeto.nome}" name="projeto.nome" placeholder="Nome">
 						</div>

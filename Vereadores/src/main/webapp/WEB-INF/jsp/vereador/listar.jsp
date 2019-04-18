@@ -12,6 +12,11 @@
 	<script	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 <script	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </head>
+<style>
+	.pega-clique:hover{
+		cursor: pointer;
+	}
+</style>
 <body>
 	<header>
 		<div>
@@ -32,6 +37,7 @@
 			</nav>
 		</div>
 	</header>
+	
 	<div class="row justify-content-sm-center" style="margin-left: 0px; margin-right: 0px;">
 		<div class="col-sm-8">
 			<h3 class="display-4" style=" margin-top: 12px;">Vereadores</h3>
@@ -42,18 +48,19 @@
 						<th colspan="1">Nome</th>
 						<th scope="col">Data Associaçao</th>
 						<th scope="col">Partido</th>
+						<th scope="col">#</th>
 					</tr>
 				</thead>
 				<tbody>
 					<c:choose>
 						<c:when test="${not empty vereadorList}">
 							<c:forEach items="${vereadorList}" var="vereador">
-								<tr>
-									<td onclick="location.href='<c:url value="/vereador/editar/${vereador.codigo}'"/>'">${vereador.pessoa.nome}</td>
-									<td onclick="location.href='<c:url value="/vereador/editar/${vereador.codigo}'"/>'">${vereador.dataAssociacao}</td>
-									<td onclick="location.href='<c:url value="/vereador/editar/${vereador.codigo}'"/>'">${vereador.partido.sigla}</td>
+								<tr class="pega-clique">
+									<td onclick="location.href='<c:url value="/vereador/editar/${vereador.codigo}"/>'">${vereador.pessoa.nome}</td>
+									<td onclick="location.href='<c:url value="/vereador/editar/${vereador.codigo}"/>'">${vereador.dataAssociacao}</td>
+									<td onclick="location.href='<c:url value="/vereador/editar/${vereador.codigo}"/>'">${vereador.partido.sigla}</td>
 									<td>
-								      	<button type="button" class="btn btn-outline-danger btn-sm" onclick="location.href='<c:url value="/vereador/excluir/${vereador.codigo}'"/>'">
+								      	<button type="button" class="btn btn-outline-danger btn-sm" onclick="location.href='<c:url value="/vereador/excluir/${vereador.codigo}"/>'">
 								      		Excluir
 								      	</button>
 								    </td>

@@ -1,9 +1,9 @@
 package bae.baesso.victor.model;
 
 import java.io.Serializable;
-import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -34,15 +34,15 @@ public class Vereador implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long codigo;
 
-	private Date dataAssociacao;
+	private String dataAssociacao;
 
 	@ManyToOne
 	private Partido partido;
 
-	@OneToMany
+	@OneToMany(fetch = FetchType.EAGER)
 	private List<Projeto> projetos;
 
-	@OneToOne(fetch = FetchType.EAGER)
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Pessoa pessoa;
 
 	public Integer qtdProjetosApresentados() {

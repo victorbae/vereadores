@@ -31,8 +31,6 @@ public class VereadorService {
 
 	public void salvar(Vereador vereador) {
 
-		vereador.setPessoa(pessoaService.buscaOuCriaNovaPessoa(vereador.getPessoa()));
-
 		if (vereador.getCodigo() == null) {
 			repository.salvar(vereador);
 		} else {
