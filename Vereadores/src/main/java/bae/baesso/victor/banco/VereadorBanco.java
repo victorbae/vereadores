@@ -3,6 +3,7 @@ package bae.baesso.victor.banco;
 import java.util.List;
 
 import bae.baesso.victor.dao.VereadorDao;
+import bae.baesso.victor.model.DadosPesquisa;
 import bae.baesso.victor.model.Vereador;
 
 public class VereadorBanco extends Banco implements VereadorDao {
@@ -75,6 +76,31 @@ public class VereadorBanco extends Banco implements VereadorDao {
 		try {
 			return Banco.getEntityManager().createQuery("select vers from Vereador vers", Vereador.class)
 					.getResultList();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		} finally {
+			Banco.desconectar();
+		}
+	}
+
+	@Override
+	public List<Vereador> findByPesquisa(DadosPesquisa pesquisa) {
+		Banco.conectar();
+
+		try {
+			// @formatter:off
+			return Banco.getEntityManager()
+					.createQuery("select vers from Vereador vers "
+							+ "where (vers.nome = :nome or :nome is null) and "
+							+ "(vers.dataAssociacao between :dataInicial and :dataFinal or (:dataInicial is null or :dataFinal is null) and "
+							+ "(vers.partido.codigo = :codPartido or (:codPartido is null)))", Vereador.class)
+					.setParameter("nome", pesquisa.getNome())
+					.setParameter("dataInicial", pesquisa.getDataInicio())
+					.setParameter("dataFinal", pesquisa.getDataFim())
+					.setParameter("codPartido", pesquisa.getCodigoPartido())
+					.getResultList();
+			// @formatter:on
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;

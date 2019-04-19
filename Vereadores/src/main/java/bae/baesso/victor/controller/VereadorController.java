@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import bae.baesso.victor.model.DadosPesquisa;
 import bae.baesso.victor.model.Vereador;
 import bae.baesso.victor.service.PartidoService;
 import bae.baesso.victor.service.VereadorService;
@@ -36,6 +37,7 @@ public class VereadorController {
 
 	@Get("/vereador/listar")
 	public List<Vereador> listar() {
+		result.include("partidos", partidoService.listar());
 		return service.listar();
 	}
 
@@ -66,6 +68,17 @@ public class VereadorController {
 	public void visualizar(Vereador vereador) {
 		result.include("vereador", vereador);
 		result.redirectTo(this).novo();
+	}
+
+	@Post("/vereador/pesquisar")
+	public void pesquisar(DadosPesquisa pesquisa) {
+		result.redirectTo(this).listar(service.pesquisar(pesquisa));
+	}
+
+	@Get("/vereador/pesquisar")
+	public void listar(List<Vereador> vereadores) {
+		result.include("partidos", partidoService.listar());
+		result.include("vereadorList", vereadores);
 	}
 
 }

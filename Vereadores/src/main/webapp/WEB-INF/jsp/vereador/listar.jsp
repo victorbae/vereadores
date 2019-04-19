@@ -38,9 +38,44 @@
 		</div>
 	</header>
 	
+	<h3 class="display-4" style=" margin-top: 12px;">Vereadores</h3>
+	<div class="row justify-content-sm-center" style="margin-left: 0px; margin-right: 0px;">
+		<div class="jumbotron">
+			<form method="post" action="<c:url value="/vereador/pesquisar"/>">
+			    <div class="row"><p class="lead">Data de associaçao</p></div>
+			  <div class="form-row">
+			    <div class="form-group col-md-6">
+			      <input type="date" class="form-control" id="dataInicio" placeholder="Data Inicial" name="pesquisa.dataInicio">
+			    </div>
+			    <div class="form-group col-md-6">
+			      <input type="date" class="form-control" id="dataFim" placeholder="Data Final" name="pesquisa.dataFim">
+			    </div>
+			  </div>
+			  <div class="form-group">
+			    <p class="lead">Nome</p>
+			    <input type="text" class="form-control" id="nome" placeholder="Nome" name="pesquisa.nome">
+			  </div>
+			  <div class="form-group">
+			    <p class="lead">Partido</p>
+			    <select class="custom-select" name="pesquisa.codigoPartido" placeholder="Partido">
+					<c:choose>
+						<c:when test="${not empty partidos}">
+							<c:forEach items="${partidos}" var="partido">
+								<option selected value="${partido.codigo}">${partido.nome}</option>
+							</c:forEach>
+						</c:when>
+						<c:otherwise>
+							<option>Nenhum partido cadastrado !!!</option>
+						</c:otherwise>
+					</c:choose>		
+				</select>	  
+			  </div>
+			  <button type="submit" class="btn btn-primary">Pesquisar</button>
+			</form>
+		</div>
+	</div>
 	<div class="row justify-content-sm-center" style="margin-left: 0px; margin-right: 0px;">
 		<div class="col-sm-8">
-			<h3 class="display-4" style=" margin-top: 12px;">Vereadores</h3>
 			<button class="btn btn-info" onclick="location.href='<c:url value="/vereador/novo"/>'" style="margin-bottom: 12px; margin-top: 12px;">Novo Vereador</button>
 			<table class="table table-bordered table-striped table-hover">
 				<thead>

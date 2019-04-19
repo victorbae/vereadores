@@ -6,6 +6,7 @@ import javax.annotation.Resource;
 import javax.inject.Inject;
 
 import bae.baesso.victor.banco.VereadorBanco;
+import bae.baesso.victor.model.DadosPesquisa;
 import bae.baesso.victor.model.Vereador;
 
 @Resource
@@ -33,6 +34,10 @@ public class VereadorService {
 		} else {
 			repository.alterar(vereador);
 		}
+	}
+
+	public List<Vereador> pesquisar(DadosPesquisa pesquisa) {
+		return repository.findByPesquisa(pesquisa);
 	}
 
 }
