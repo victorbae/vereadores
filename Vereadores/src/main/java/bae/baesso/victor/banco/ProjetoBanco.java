@@ -25,22 +25,6 @@ public class ProjetoBanco extends Banco implements ProjetoDao {
 	}
 
 	@Override
-	public void alterar(Projeto dado) {
-		Banco.conectar();
-		Banco.getTransaction().begin();
-
-		try {
-			Banco.getEntityManager().merge(dado);
-			Banco.getTransaction().commit();
-		} catch (Exception e) {
-			Banco.getTransaction().rollback();
-			e.printStackTrace();
-		} finally {
-			Banco.desconectar();
-		}
-	}
-
-	@Override
 	public void excluir(Long codigo) {
 		Banco.conectar();
 		Banco.getTransaction().begin();
@@ -77,6 +61,22 @@ public class ProjetoBanco extends Banco implements ProjetoDao {
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
+		} finally {
+			Banco.desconectar();
+		}
+	}
+
+	@Override
+	public void alterar(Projeto dado) {
+		Banco.conectar();
+		Banco.getTransaction().begin();
+
+		try {
+			Banco.getEntityManager().merge(dado);
+			Banco.getTransaction().commit();
+		} catch (Exception e) {
+			Banco.getTransaction().rollback();
+			e.printStackTrace();
 		} finally {
 			Banco.desconectar();
 		}

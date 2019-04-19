@@ -1,6 +1,7 @@
 package bae.baesso.victor.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -39,7 +40,7 @@ public class Vereador implements Serializable {
 	@ManyToOne
 	private Partido partido;
 
-	@OneToMany(fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "vereador", fetch = FetchType.EAGER)
 	private List<Projeto> projetos;
 
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -63,5 +64,9 @@ public class Vereador implements Serializable {
 			}
 		}
 		return count;
+	}
+
+	public List<Projeto> getProjetos() {
+		return this.projetos != null ? this.projetos : new ArrayList<Projeto>();
 	}
 }

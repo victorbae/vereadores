@@ -22,14 +22,7 @@ public class ProjetoController {
 	@Inject
 	private VereadorService vereadorService;
 
-	@Get("/editar/{codProjeto}")
-	public void editar(Long codProjeto) {
-		Projeto projeto = service.findOne(codProjeto);
-		result.include("projeto", projeto);
-		result.redirectTo(this).novo();
-	}
-
-	@Get("/excluir/{codProjeto}")
+	@Get("/excluir/{codVereador}/{codProjeto}")
 	public void excluir(Long codVereador, Long codProjeto) {
 		service.excluir(codProjeto);
 		result.include("vereador", vereadorService.findOne(codVereador));
@@ -37,14 +30,10 @@ public class ProjetoController {
 	}
 
 	@Post("/salvar")
-	public void salvar(Long codVereador, Projeto projeto) {
+	public void salvar(Projeto projeto) {
 		service.salvar(projeto);
-		result.include("vereador", vereadorService.findOne(codVereador));
+		result.include("vereador", vereadorService.findOne(projeto.getVereador().getCodigo()));
 		result.redirectTo(VereadorController.class).novo();
-	}
-
-	@Get("/novo")
-	public void novo() {
 	}
 
 }

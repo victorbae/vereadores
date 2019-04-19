@@ -6,12 +6,37 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Vereador</title>
-	<link rel="stylesheet"
-		href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 	<script	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-<script	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+	<script	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
 </head>
+<style>
+	.pega-clique:hover{
+		cursor: pointer;
+	}
+	.make-font-linda{
+		font-size: 21px;
+	}
+	.danger{
+		color: #dc3545;
+	}
+	.success{
+		color: #28a745;
+	}
+</style>
+<script>
+	function feedValues(cod) {
+		console.log('.onde-tem-os-valor-' + cod);
+		$('#projCod').val($('.onde-tem-os-valor-' + cod).data('codigo'));
+		$('#projName').val($('.onde-tem-os-valor-' + cod).data('nome'));
+		$('#switchAprovado').attr('checked', $('.onde-tem-os-valor-' + cod).data('aprovado'));
+		$('#switchApresentado').attr('checked', $('.onde-tem-os-valor-' + cod).data('apresentado'));
+		
+		$('#fuckingProjetos').modal('show');
+	}
+</script>
 <body>
 	<header>
 		<div>
@@ -77,47 +102,55 @@
 		<div class="row justify-content-sm-center m-0" style="margin-left: 0px; margin-right: 0px;">
 			<div class="col-sm-8">
 				<h3 class="display-4" style=" margin-top: 12px;">Projetos</h3>
-				<button class="btn btn-info" data-toggle="modal" data-target="#projeto" style="margin-bottom: 12px; margin-top: 12px;">Novo Projeto</button>
+				<button class="btn btn-info" data-toggle="modal" data-target="#fuckingProjetos" style="margin-bottom: 12px; margin-top: 12px;">Novo Projeto</button>
 				<table class="table table-bordered table-striped table-hover">
 					<thead>
 						<tr>
-							<th >Nome</th>
-							<th >Apresentado</th>
-							<th >Aprovado</th>
+							<th class="col-sm-6">Nome</th>
+							<th class="col-sm-2 text-center">Apresentado</th>
+							<th class="col-sm-2 text-center">Aprovado</th>
+							<th class="col-sm-2 text-center">#</th>
 						</tr>
 					</thead>
 					<tbody>
 						<c:choose>
 							<c:when test="${not empty vereador.projetos}">
-								<c:forEach items="${projetoLvereador.projetosist}" var="projeto">
+								<c:forEach items="${vereador.projetos}" var="projeto" varStatus="loop">
 									<tr>
-										<td onclick="location.href='<c:url value="/projeto/editar/${projeto.codigo}'"/>'">${projeto.nome}</td>
-										<td>
+										<td onclick="feedValues(${loop.index})" data-codigo="${projeto.codigo}" data-aprovado="${projeto.aprovado}"
+											 data-apresentado="${projeto.apresentado}" data-nome="${projeto.nome}"
+											 class="pega-clique onde-tem-os-valor-${loop.index}" >${projeto.nome}</td>
+										<td class="text-center">
 											<c:choose>
 												<c:when test="${projeto.apresentado == true}">
-													<i class="fas fa-check"></i>
+													<i class="fas fa-check make-font-linda success"></i>
 											     </c:when>
 												<c:otherwise>
-													<i class="fas fa-times"></i>
+													<i class="fas fa-times make-font-linda danger"></i>
 												</c:otherwise>
 											</c:choose>
 									    </td>
-										<td>
+										<td class="text-center">
 											<c:choose>
 												<c:when test="${projeto.aprovado == true}">
-													<i class="fas fa-check"></i>
+													<i class="fas fa-check make-font-linda success"></i>
 											     </c:when>
 												<c:otherwise>
-													<i class="fas fa-times"></i>
+													<i class="fas fa-times make-font-linda danger"></i>
 												</c:otherwise>
 											</c:choose>
+									    </td>
+									    <td class="text-center">
+									      	<button type="button" class="btn btn-outline-danger btn-sm" onclick="location.href='<c:url value="/projeto/excluir/${vereador.codigo}/${projeto.codigo}"/>'">
+									      		Excluir
+									      	</button>
 									    </td>
 									</tr>
 								</c:forEach>
 							</c:when>
 							<c:otherwise>
 								<tr>
-									<td class="text-center" colspan="3">Nenhum projeto cadastrado</td>
+									<td class="text-center" colspan="4">Nenhum projeto cadastrado</td>
 								</tr>
 							</c:otherwise>
 						</c:choose>
@@ -127,7 +160,7 @@
 		</div>
 	</c:if>
 		
-	<div class="modal" tabindex="-1" role="dialog" id="projeto">
+	<div class="modal fade" tabindex="-1" role="dialog" id="fuckingProjetos">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -137,18 +170,18 @@
 					</button>
 				</div>
 				<div class="modal-body">
-					<form action="<c:url value="/projeto/salvar"/>" method="post">
+					<form action="<c:url value="/projeto/salvar"/>" method="post" id="form-punk">
 						<div class="form-group">
-							<input type="hidden" name="partido.codigo" value="${vereador.codigo}"> 
-							<input type="hidden" name="partido.codigo" value="${projeto.codigo}"> 
-							<input type="text" class="form-control" value="${projeto.nome}" name="projeto.nome" placeholder="Nome">
+							<input type="hidden" name="projeto.vereador.codigo" value="${vereador.codigo}"> 
+							<input type="hidden" name="projeto.codigo" value="${projeto.codigo}" id="projCod"> 
+							<input type="text" class="form-control" value="${projeto.nome}" name="projeto.nome" placeholder="Nome" id="projName">
 						</div>
 						<div class="custom-control custom-switch">
-							<input type="checkbox" class="custom-control-input" name="projeto.apresentado" value="${projeto.apresentado}" id="switchApresentado">
+							<input type="checkbox" class="custom-control-input" name="projeto.apresentado" checked="${projeto.apresentado}" id="switchApresentado">
 							<label class="custom-control-label" for="switchApresentado">Apresentado</label>
 						</div>
 						<div class="custom-control custom-switch">
-							<input type="checkbox" class="custom-control-input" name="projeto.aprovado" value="${projeto.aprovado}" id="switchAprovado">
+							<input type="checkbox" class="custom-control-input" name="projeto.aprovado" checked="${projeto.aprovado}" id="switchAprovado">
 							<label class="custom-control-label" for="switchAprovado">Aprovado</label>
 						</div>
 						<button type="submit" class="btn btn-success float-right">Salvar</button>

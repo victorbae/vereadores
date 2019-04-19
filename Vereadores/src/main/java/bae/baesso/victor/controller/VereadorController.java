@@ -63,4 +63,9 @@ public class VereadorController {
 		result.include("partidos", partidoService.listar());
 	}
 
+	public void visualizar(Vereador vereador) {
+		result.include("vereador", vereador);
+		result.redirectTo(this).novo();
+	}
+
 }

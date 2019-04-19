@@ -27,6 +27,11 @@ public class ProjetoService {
 	}
 
 	public void salvar(Projeto projeto) {
-		repository.salvar(projeto);
+		if (projeto.temCodigo()) {
+			repository.alterar(projeto);
+		} else {
+			repository.salvar(projeto);
+		}
 	}
+
 }

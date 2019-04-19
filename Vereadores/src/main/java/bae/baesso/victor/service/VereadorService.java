@@ -14,9 +14,6 @@ public class VereadorService {
 	@Inject
 	private VereadorBanco repository;
 
-	@Inject
-	private PessoaService pessoaService;
-
 	public List<Vereador> listar() {
 		return repository.listar();
 	}
