@@ -6,6 +6,7 @@ import javax.annotation.Resource;
 import javax.inject.Inject;
 
 import bae.baesso.victor.banco.ProjetoBanco;
+import bae.baesso.victor.model.DadosPesquisa;
 import bae.baesso.victor.model.Projeto;
 
 @Resource
@@ -32,6 +33,10 @@ public class ProjetoService {
 		} else {
 			repository.salvar(projeto);
 		}
+	}
+
+	public List<Projeto> pesquisar(DadosPesquisa pesquisa) {
+		return repository.findByPesquisa(pesquisa);
 	}
 
 }

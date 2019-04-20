@@ -92,13 +92,13 @@ public class VereadorBanco extends Banco implements VereadorDao {
 			// @formatter:off
 			return Banco.getEntityManager()
 					.createQuery("select vers from Vereador vers "
-							+ "where (vers.nome = :nome or :nome is null) and "
-							+ "(vers.dataAssociacao between :dataInicial and :dataFinal or (:dataInicial is null or :dataFinal is null) and "
-							+ "(vers.partido.codigo = :codPartido or (:codPartido is null)))", Vereador.class)
-					.setParameter("nome", pesquisa.getNome())
-					.setParameter("dataInicial", pesquisa.getDataInicio())
-					.setParameter("dataFinal", pesquisa.getDataFim())
-					.setParameter("codPartido", pesquisa.getCodigoPartido())
+							+ "where (vers.pessoa.nome like :nome or :nome is null) and "
+							+ "(vers.dataAssociacao between :dataInicial and :dataFinal or (:dataInicial is null or :dataFinal is null)) and "
+							+ "(vers.partido.codigo = :codPartido or (:codPartido is null))", Vereador.class)
+					.setParameter("nome", pesquisa.getNome() != null ? "%" + pesquisa.getNome() + "%" : null)
+					.setParameter("dataInicial", pesquisa.getDataInicio() != null ? pesquisa.getDataInicio() : null)
+					.setParameter("dataFinal", pesquisa.getDataFim() != null ? pesquisa.getDataFim() : null)
+					.setParameter("codPartido", pesquisa.getCodigoPartido() != null ? pesquisa.getCodigoPartido() : null)
 					.getResultList();
 			// @formatter:on
 		} catch (Exception e) {

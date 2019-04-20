@@ -3,6 +3,7 @@ package bae.baesso.victor.banco;
 import java.util.List;
 
 import bae.baesso.victor.dao.ProjetoDao;
+import bae.baesso.victor.model.DadosPesquisa;
 import bae.baesso.victor.model.Projeto;
 
 public class ProjetoBanco extends Banco implements ProjetoDao {
@@ -77,6 +78,28 @@ public class ProjetoBanco extends Banco implements ProjetoDao {
 		} catch (Exception e) {
 			Banco.getTransaction().rollback();
 			e.printStackTrace();
+		} finally {
+			Banco.desconectar();
+		}
+	}
+
+	@Override
+	public List<Projeto> findByPesquisa(DadosPesquisa pesquisa) {
+		Banco.conectar();
+
+		try {
+			// @formatter:off
+			return Banco.getEntityManager()
+					.createQuery("select proj from Projeto proj "
+							+ "where (proj.nome like :nome or :nome is null) and "
+							+ "(proj.vereador.codigo = :codVereador or ( :codVereador is null))", Projeto.class)
+					.setParameter("nome", pesquisa.getNomeProjeto() != null ? "%" + pesquisa.getNomeProjeto() + "%" : null)
+					.setParameter("codVereador", pesquisa.getCodigoVereador() != null ? pesquisa.getCodigoVereador() : null)
+					.getResultList();
+			// @formatter:on
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
 		} finally {
 			Banco.desconectar();
 		}

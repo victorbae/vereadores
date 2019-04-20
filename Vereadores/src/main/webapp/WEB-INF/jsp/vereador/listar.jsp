@@ -27,7 +27,7 @@
 					    <a class="nav-link text-dark" href="<c:url value="/"/>">Vereadores</a>
 					  </li>
 					  <li class="nav-item" style="margin-right: 10px">
-					    <a class="nav-link text-dark" href="<c:url value="/projeto"/>">Projetos</a>
+					    <a class="nav-link text-dark" href="<c:url value="/projeto/"/>">Projetos</a>
 					  </li>
 					  <li class="nav-item">
 					    <a class="nav-link text-dark" href="<c:url value="/partido/"/>">Partidos</a>
@@ -38,43 +38,47 @@
 		</div>
 	</header>
 	
-	<h3 class="display-4" style=" margin-top: 12px;">Vereadores</h3>
-	<div class="row justify-content-sm-center" style="margin-left: 0px; margin-right: 0px;">
-		<div class="jumbotron">
+	<h3 class="display-4 text-center" style="margin-top: 12px;">Vereadores</h3>
+	<div class="row justify-content-sm-center m-0">
+		<div class="jumbotron col-md-8 m-2 p-5">
 			<form method="post" action="<c:url value="/vereador/pesquisar"/>">
-			    <div class="row"><p class="lead">Data de associaçao</p></div>
-			  <div class="form-row">
-			    <div class="form-group col-md-6">
-			      <input type="date" class="form-control" id="dataInicio" placeholder="Data Inicial" name="pesquisa.dataInicio">
-			    </div>
-			    <div class="form-group col-md-6">
-			      <input type="date" class="form-control" id="dataFim" placeholder="Data Final" name="pesquisa.dataFim">
-			    </div>
-			  </div>
-			  <div class="form-group">
-			    <p class="lead">Nome</p>
-			    <input type="text" class="form-control" id="nome" placeholder="Nome" name="pesquisa.nome">
-			  </div>
-			  <div class="form-group">
-			    <p class="lead">Partido</p>
-			    <select class="custom-select" name="pesquisa.codigoPartido" placeholder="Partido">
-					<c:choose>
-						<c:when test="${not empty partidos}">
-							<c:forEach items="${partidos}" var="partido">
-								<option selected value="${partido.codigo}">${partido.nome}</option>
-							</c:forEach>
-						</c:when>
-						<c:otherwise>
-							<option>Nenhum partido cadastrado !!!</option>
-						</c:otherwise>
-					</c:choose>		
-				</select>	  
-			  </div>
-			  <button type="submit" class="btn btn-primary">Pesquisar</button>
+				<div class="form-row mb-3">
+					<label for="dataInicio" class="col-sm-3 lead text-right pr-2 ">Data de associação</label>
+					<div class="col pl-0">
+						<p class="lead mb-0">De:</p>
+						<input type="text" class="form-control" id="dataInicio" placeholder="Data Inicial" onfocus="(this.type='date')" name="pesquisa.dataInicio">
+					</div>
+					<div class="col pr-0">
+						<p class="lead mb-0">Até:</p>
+						<input type="text" class="form-control" id="dataFim" placeholder="Data Final" onfocus="(this.type='date')" name="pesquisa.dataFim">
+					</div>
+				</div>
+				<div class="form-row mb-3">
+					<label for="nome" class="col-sm-3 lead text-right pr-3">Nome:</label>
+					<input type="text" class="form-control col-sm-9" id="nome" placeholder="Nome do vereador" name="pesquisa.nome">
+				</div>
+				<div class="form-row mb-3">
+					<label for="partido" class="col-sm-3 lead text-right pr-3">Partido:</label>
+					<select class="custom-select col-sm-9" name="pesquisa.codigoPartido" placeholder="Partido" id="partido">
+						<c:choose>
+							<c:when test="${not empty partidos}">
+								<option selected value="">Todos</option>
+								<c:forEach items="${partidos}" var="partido">
+									<option value="${partido.codigo}">${partido.sigla} - ${partido.nome}</option>
+								</c:forEach>
+							</c:when>
+							<c:otherwise>
+								<option>Nenhum partido cadastrado !!!</option>
+							</c:otherwise>
+						</c:choose>		
+					</select>	  
+				</div>
+				<button type="button" onclick="location.href='<c:url value="/vereador/listar"/>'" class="btn btn-primary">Limpar pesquisas</button>
+				<button type="submit" class="btn btn-primary float-right">Pesquisar</button>
 			</form>
 		</div>
 	</div>
-	<div class="row justify-content-sm-center" style="margin-left: 0px; margin-right: 0px;">
+	<div class="row justify-content-sm-center m-0">
 		<div class="col-sm-8">
 			<button class="btn btn-info" onclick="location.href='<c:url value="/vereador/novo"/>'" style="margin-bottom: 12px; margin-top: 12px;">Novo Vereador</button>
 			<table class="table table-bordered table-striped table-hover">
@@ -104,7 +108,7 @@
 						</c:when>
 						<c:otherwise>
 							<tr>
-								<td colspan="3" class="text-center">Nenhum vereador cadastrado</td>
+								<td colspan="4" class="text-center">Nenhum vereador encontrado</td>
 							</tr>
 						</c:otherwise>
 					</c:choose>

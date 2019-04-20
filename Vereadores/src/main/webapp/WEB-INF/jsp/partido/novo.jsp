@@ -22,7 +22,7 @@
 					    <a class="nav-link text-dark" href="<c:url value="/"/>">Vereadores</a>
 					  </li>
 					  <li class="nav-item" style="margin-right: 10px">
-					    <a class="nav-link text-dark" href="<c:url value="/projeto"/>">Projetos</a>
+					    <a class="nav-link text-dark" href="<c:url value="/projeto/"/>">Projetos</a>
 					  </li>
 					  <li class="nav-item">
 					    <a class="nav-link text-dark" href="<c:url value="/partido/"/>">Partidos</a>
@@ -35,17 +35,17 @@
 	
 	<div class="row justify-content-sm-center">
 		<div class="col-sm-5">
-			<h2 class="display-4" style="margin-bottom: 12px; margin-top: 12px; text-align: center;">Novo Projeto</h2>
+			<h2 class="display-4" style="margin-bottom: 12px; margin-top: 12px; text-align: center;">Novo Partido</h2>
 			<form action="<c:url value="/partido/salvar"/>" method="post">
 			  <div class="form-group">
 				<input type="hidden" name="partido.codigo" value="${partido.codigo}"> 
-				<input type="text" class="form-control" value="${partido.numero}" name="partido.numero" placeholder="Número">
+				<input type="text" class="form-control" value="${partido.numero}" name="partido.numero" placeholder="Número" required="required">
 			  </div>
 			  <div class="form-group">
-				<input type="text" class="form-control" value="${partido.nome}" name="partido.nome" placeholder="Nome">
+				<input type="text" class="form-control" value="${partido.nome}" name="partido.nome" placeholder="Nome" required="required">
 			  </div>
 			  <div class="form-group">
-				<input type="text" class="form-control" value="${partido.sigla}" name="partido.sigla" placeholder="Sigla">
+				<input type="text" class="form-control" value="${partido.sigla}" name="partido.sigla" placeholder="Sigla" required="required">
 			  </div>
 			  
 			  <button type="submit" class="btn btn-success float-right">Salvar</button>

@@ -16,4 +16,7 @@ public class DadosPesquisa {
 	private String dataFim;
 	private Long codigoPartido;
 
+	private String nomeProjeto;
+	private Long codigoVereador;
+
 }

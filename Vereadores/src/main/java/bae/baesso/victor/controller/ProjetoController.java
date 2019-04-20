@@ -1,7 +1,10 @@
 package bae.baesso.victor.controller;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
+import bae.baesso.victor.model.DadosPesquisa;
 import bae.baesso.victor.model.Projeto;
 import bae.baesso.victor.service.ProjetoService;
 import bae.baesso.victor.service.VereadorService;
@@ -22,6 +25,17 @@ public class ProjetoController {
 	@Inject
 	private VereadorService vereadorService;
 
+	@Get("/")
+	public void index() {
+		result.redirectTo(this).listar();
+	}
+
+	@Get("/listar")
+	public List<Projeto> listar() {
+		result.include("vereadores", vereadorService.listar());
+		return service.listar();
+	}
+
 	@Get("/excluir/{codVereador}/{codProjeto}")
 	public void excluir(Long codVereador, Long codProjeto) {
 		service.excluir(codProjeto);
@@ -34,6 +48,17 @@ public class ProjetoController {
 		service.salvar(projeto);
 		result.include("vereador", vereadorService.findOne(projeto.getVereador().getCodigo()));
 		result.redirectTo(VereadorController.class).novo();
+	}
+
+	@Post("/pesquisar")
+	public void pesquisar(DadosPesquisa pesquisa) {
+		result.redirectTo(this).listar(service.pesquisar(pesquisa));
+	}
+
+	@Get("/pesquisar")
+	public void listar(List<Projeto> projetos) {
+		result.include("vereadores", vereadorService.listar());
+		result.include("projetoList", projetos);
 	}
 
 }
